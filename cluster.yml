@@ -1,0 +1,28 @@
+---
+- name: Build Docker image from local Dockerfile and run command in container
+  hosts: utils03
+  become: true
+  vars:
+    docker_container_name: my_container
+    docker_image_name: my_image
+    docker_command: "echo 'Hello, world!'"
+    dockerfile_path: /path/to/Dockerfile
+  tasks:
+    - name: Ensure Docker is installed
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Build Docker image from local Dockerfile
+      docker_image:
+        build:
+          path: "{{ dockerfile_path }}"
+          tag: "{{ docker_image_name }}"
+
+    - name: Run command in Docker container
+      docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image_name }}"
+        state: started
+        command: "{{ docker_command }}"
+
