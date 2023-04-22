@@ -5,6 +5,7 @@
     - name: Pull Kubespray Docker Image
       docker_image:
         name: quay.io/kubespray/kubespray:v2.21.0
+
     - name: Start Kubespray Docker Container
       docker_container:
         name: kubespray
