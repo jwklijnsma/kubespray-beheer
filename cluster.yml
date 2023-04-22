@@ -14,8 +14,9 @@
         state: started
         interactive: true
         tty: true
-        bind:
-          - source: "/root/inventory"
+        volumes:
+          - type: bind
+            source: /root/inventory
             target: /inventory
 
     - name: Run Ansible Playbook in Docker Container
