@@ -4,6 +4,7 @@
   tasks:
     - name: Pull Kubespray Docker Image
       docker_image:
+        source: pull
         name: quay.io/kubespray/kubespray:v2.21.0
 
     - name: Start Kubespray Docker Container
