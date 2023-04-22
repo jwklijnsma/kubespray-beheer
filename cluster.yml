@@ -1,28 +1,28 @@
 ---
-- name: Build Docker image from local Dockerfile and run command in container
+- name: Run Kubespray Playbook in Docker Container
   hosts: utils03
-  become: true
-  vars:
-    docker_container_name: my_container
-    docker_image_name: my_image
-    docker_command: "echo 'Hello, world!'"
-    dockerfile_path: /path/to/Dockerfile
   tasks:
-    - name: Ensure Docker is installed
-      apt:
-        name: docker.io
-        state: present
-
-    - name: Build Docker image from local Dockerfile
+    - name: Pull Kubespray Docker Image
       docker_image:
-        build:
-          path: "{{ dockerfile_path }}"
-          tag: "{{ docker_image_name }}"
+        name: quay.io/kubespray/kubespray:v2.21.0
 
-    - name: Run command in Docker container
+    - name: Start Kubespray Docker Container
       docker_container:
-        name: "{{ docker_container_name }}"
-        image: "{{ docker_image_name }}"
+        name: kubespray
+        image: quay.io/kubespray/kubespray:v2.21.0
         state: started
-        command: "{{ docker_command }}"
+        interactive: true
+        tty: true
+        remove_on_exit: true
+        volumes:
+          - type: bind
+            source: "/root/inventory/discloud"
+            target: /inventory
+          - type: bind
+            source: "/root/inventory/ssh/id_rsa"
+            target: /root/.ssh/id_rsa
 
+    - name: Run Ansible Playbook in Docker Container
+      docker_container_exec:
+        container: kubespray
+        command: ansible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa cluster.yml -e kube_version=v1.25.6 -e calico_pool_blocksize=24  -e crio_packages=1.24
