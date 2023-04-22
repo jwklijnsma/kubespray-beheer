@@ -21,3 +21,16 @@
 
     - name: Run Ansible Playbook in Docker Container
       command: docker exec -it kubespray bash -c 'ansible-playbook -i /inventory/discloud/inventory.ini --private-key /inventory/ssh/id_rsa cluster.yml -e kube_version=v1.25.6 -e calico_pool_blocksize=24  -e crio_packages=1.24'
+
+    - name: Get container ID
+      shell: docker ps -q --filter name=kubespray
+      register: container_id
+
+    - name: Get logs from container
+      docker_container_logs:
+        id: "{{ container_id.stdout }}"
+      register: container_logs
+
+    - name: Print container logs
+      debug:
+        var: container_logs.stdout_lines
