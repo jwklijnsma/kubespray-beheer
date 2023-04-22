@@ -15,9 +15,7 @@
         interactive: true
         tty: true
         volumes:
-          - type: bind
-            source: /root/inventory
-            target: /inventory
+          - /root/inventory:/inventory
 
     - name: Run Ansible Playbook in Docker Container
       command: docker exec -it kubespray bash -c 'ansible-playbook -i /inventory/discloud/inventory.ini --private-key /inventory/ssh/id_rsa cluster.yml -e kube_version=v1.25.6 -e calico_pool_blocksize=24  -e crio_packages=1.24'
