@@ -1,0 +1,24 @@
+---
+- name: Run Kubespray Playbook in Docker Container
+  hosts: utils03
+  tasks:
+    - name: Pull Kubespray Docker Image
+      docker_image:
+        source: pull
+        name: quay.io/kubespray/kubespray:v2.21.0
+
+    - name: Start Kubespray Docker Container
+      docker_container:
+        name: kubespray
+        image: quay.io/kubespray/kubespray:v2.21.0
+        state: started
+        interactive: true
+        tty: true
+        volumes:
+          - /root/inventory:/inventory
+
+    - name: Run Ansible Playbook in Docker Container
+      command: docker exec -it kubespray bash -c 'ansible-playbook -i /inventory/discloud/inventory.ini upgrade-cluster.yml -e kube_version=v1.25.6 -e calico_pool_blocksize=24  -e crio_packages=1.24'
+      register: log
+
+    - debug: msg="{{ log.stdout }}"  
