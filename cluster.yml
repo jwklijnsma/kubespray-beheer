@@ -16,11 +16,11 @@
         tty: true
         volumes:
           - type: bind
-            source: "/root/inventory/discloud"
+            source: "/root/inventory"
             target: /inventory
           - type: bind
             source: "/root/inventory/ssh/id_rsa"
             target: /root/.ssh/id_rsa
 
     - name: Run Ansible Playbook in Docker Container
-      command: docker exec -it kubespray bash -c 'nsible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa cluster.yml -e kube_version=v1.25.6 -e calico_pool_blocksize=24  -e crio_packages=1.24'
+      command: docker exec -it kubespray bash -c 'ansible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa cluster.yml -e kube_version=v1.25.6 -e calico_pool_blocksize=24  -e crio_packages=1.24'
