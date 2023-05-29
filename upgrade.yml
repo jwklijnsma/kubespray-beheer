@@ -1,17 +1,24 @@
 ---
-- name: Run Kubespray Playbook in Docker Container
+- name: Build Docker image and start container Kubespray
   hosts: utils03
-  remote_src: false
+  gather_facts: false
   tasks:
-    - name: Pull Kubespray Docker Image
-      docker_image:
-        source: pull
-        name: quay.io/kubespray/kubespray:v2.22.0 
+    - name: Clone Kubespray repository
+      git:
+        repo: https://github.com/kubernetes-sigs/kubespray.git
+        dest: /root/kubespray  # Replace with the desired destination path
 
-    - name: Start Kubespray Docker Container
+    - name: Build Docker image using Kubespray Dockerfile
+      docker_image:
+        build:
+          path: /root/kubespray  # Replace with the path to your cloned kubespray directory
+          dockerfile: /root/kubespray/Dockerfile  # Replace with the path to Kubespray's Dockerfile
+        name: kubespray:latest
+
+    - name: Start Docker container
       docker_container:
         name: kubespray
-        image: quay.io/kubespray/kubespray:v2.22.0
+        image: kubespray:latest
         state: started
         interactive: true
         tty: true
@@ -19,7 +26,7 @@
           - /root/inventory:/kubespray/inventory
 
     - name: Run Ansible Playbook in Docker Container
-      command: docker exec -it kubespray bash -c 'ansible-playbook -i /kubespray/inventory/discloud/inventory.ini /kubespray/upgrade-cluster.yml -e kube_version=v1.26.6 -e calico_pool_blocksize=24  -e crio_packages=1.24'
+      command: docker exec -it kubespray bash -c 'ansible-playbook -i /kubespray/inventory/discloud/inventory.ini /kubespray/upgrade-cluster.yml -e kube_version=v1.26.5-e calico_pool_blocksize=24  -e crio_packages=1.24'
       register: log
 
     - debug: msg="{{ log.stdout }}"  
