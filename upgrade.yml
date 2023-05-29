@@ -5,12 +5,7 @@
     - name: Pull Kubespray Docker Image
       docker_image:
         source: pull
-        name: quay.io/kubespray/kubespray:v2.22.0
-
-    - name: Stop Docker container
-      docker_container:
-        name: kubespray
-        state: stopped     
+        name: quay.io/kubespray/kubespray:v2.22.0 
 
     - name: Start Kubespray Docker Container
       docker_container:
