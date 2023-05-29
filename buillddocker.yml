@@ -1,0 +1,25 @@
+- name: Build Docker image and start container Kubespray
+  hosts: utils03
+  gather_facts: false
+  tasks:
+    - name: Clone Kubespray repository
+      git:
+        repo: https://github.com/kubernetes-sigs/kubespray.git
+        dest: /root/kubespray  # Replace with the desired destination path
+  
+    - name: Build Docker image
+      community.docker.docker_image:
+        name: kubespray:latest
+        build:
+          path: /root/kubespray
+        source: build
+
+    - name: Start Docker container
+      docker_container:
+        name: kubespray
+        image: kubespray:latest
+        state: started
+        interactive: true
+        tty: true
+        volumes:
+          - /root/inventory:/kubespray/inventory
