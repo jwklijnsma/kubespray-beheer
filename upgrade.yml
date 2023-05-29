@@ -10,9 +10,11 @@
   
     - name: Build Docker image
       docker_image:
-        build:
-          path: /root/kubespray
-        name: kubespray:latest
+      name: kubespray:latest
+      source: build
+      build:
+        path: /root/kubespray
+        pull: false
   
     - name: Start Docker container
       docker_container:
