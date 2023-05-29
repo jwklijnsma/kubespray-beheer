@@ -10,9 +10,10 @@
   
     - name: Build Docker image
       community.docker.docker_image:
-        path: /root/kubespray
         name: kubespray:latest
-        pull: false
+        build:
+          path: /root/kubespray
+        source: build
 
     - name: Start Docker container
       docker_container:
