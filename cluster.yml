@@ -1,7 +1,7 @@
 ---
 - name: Run Kubespray Playbook in Docker Container
   hosts: utils03
-- tasks:
+  tasks:
     - name: Pull Kubespray Docker Image
       docker_image:
         source: pull
