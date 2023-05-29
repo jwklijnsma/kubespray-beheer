@@ -13,6 +13,7 @@
         build:
           path: /root/kubespray  # Replace with the path to your cloned kubespray directory
           dockerfile: /root/kubespray/Dockerfile  # Replace with the path to Kubespray's Dockerfile
+          source: build
         name: kubespray:latest
 
     - name: Start Docker container
