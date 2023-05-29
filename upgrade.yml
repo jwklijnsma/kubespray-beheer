@@ -7,15 +7,13 @@
       git:
         repo: https://github.com/kubernetes-sigs/kubespray.git
         dest: /root/kubespray  # Replace with the desired destination path
-
-    - name: Build Docker image using Kubespray Dockerfile
+  
+    - name: Build Docker image
       docker_image:
         build:
-          path: /root/kubespray  # Replace with the path to your cloned kubespray directory
-          dockerfile: /root/kubespray/Dockerfile  # Replace with the path to Kubespray's Dockerfile
-          source: build
+          path: /root/kubespray
         name: kubespray:latest
-
+  
     - name: Start Docker container
       docker_container:
         name: kubespray
