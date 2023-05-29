@@ -9,10 +9,11 @@
         dest: /root/kubespray  # Replace with the desired destination path
   
     - name: Build Docker image
-      docker_build:
+      community.docker.docker_image:
         path: /root/kubespray
         name: kubespray:latest
         pull: false
+
     - name: Start Docker container
       docker_container:
         name: kubespray
