@@ -15,10 +15,10 @@
         interactive: true
         tty: true
         volumes:
-          - /root/inventory:/inventory
+          - /root/inventory:/kubespray/inventory
 
     - name: Run Ansible Playbook in Docker Container
-      command: docker exec -it kubespray bash -c ' ansible-playbook -i /inventory/discloud/inventory.ini /kubespray/cluster.yml -e kube_version=v1.26.6 -e calico_pool_blocksize=24  -e crio_packages=1.24'
+      command: docker exec -it kubespray bash -c ' ansible-playbook -i /kubespray/inventory/discloud/inventory.ini /kubespray/cluster.yml -e kube_version=v1.26.6 -e calico_pool_blocksize=24  -e crio_packages=1.24'
       register: log
 
     - debug: msg="{{ log.stdout }}"  
