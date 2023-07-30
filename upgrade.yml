@@ -4,7 +4,7 @@
   gather_facts: false
   tasks:
     - name: Run Ansible Playbook in Docker Container
-      command: docker exec -it kubespray bash -c 'ansible-playbook -i /kubespray/inventory/discloud/inventory.ini /kubespray/upgrade-cluster.yml -e kube_version=v1.26.5 -e calico_pool_blocksize=24  -e crio_packages=1.24'
+      command: docker exec -it kubespray bash -c 'ansible-playbook -i /kubespray/inventory/discloud/inventory.ini /kubespray/upgrade-cluster.yml -e kube_version=v1.26.7 -e calico_pool_blocksize=24  -e crio_packages=1.27'
       register: log
 
     - debug: msg="{{ log.stdout }}"  
