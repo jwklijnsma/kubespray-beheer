@@ -7,18 +7,18 @@
         repo: https://github.com/kubernetes-sigs/kubespray.git
         dest: /root/kubespray  # Replace with the desired destination path
   
-    #- name: Build Docker image
-      #community.docker.docker_image:
-        #name: kubespray:latest
-        #build:
-          #path: /root/kubespray
-        #source: build
+    - name: Build Docker image
+      community.docker.docker_image:
+        name: kubespray:latest
+        build:
+          path: /root/kubespray
+        source: build
 
     - name: Start Docker container
       docker_container:
         name: kubespray
-        #image: kubespray:latest
-        image: quay.io/kubespray/kubespray:v2.23.0
+        image: kubespray:latest
+        #image: quay.io/kubespray/kubespray:v2.23.0
         state: started
         interactive: true
         tty: true
