@@ -3,7 +3,7 @@
   hosts: utils03
   tasks:
     - name: Run Ansible Playbook in Docker Container
-      command: docker exec -it kubespray bash -c 'ansible-playbook -i /kubespray/inventory/discloud/inventory.ini /kubespray/upgrade-cluster.yml -e kube_version=v1.28.5 -e calico_pool_blocksize=24  -e crio_packages=1.27'
+      command: docker exec -it kubespray bash -c 'ansible-playbook -i /kubespray/inventory/discloud/inventory.ini /kubespray/upgrade-cluster.yml -e kube_version=v1.29.0 -e calico_pool_blocksize=24  -e crio_packages=1.27'
       register: log
 
     - debug: msg="{{ log.stdout }}"  
