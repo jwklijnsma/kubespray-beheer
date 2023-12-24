@@ -16,14 +16,14 @@
 
     - name: Remove the old Docker image
       community.docker.docker_image:
-        name: kubespray:main
+        name: kubespray:master
         state: absent   
 
     - name: Start Docker container
       docker_container:
         name: kubespray
         #image: kubespray:latest
-        image: ghcr.io/jwklijnsma/kubespray:main 
+        image: ghcr.io/jwklijnsma/kubespray:master
         state: started
         interactive: true
         tty: true
