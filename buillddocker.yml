@@ -2,11 +2,6 @@
   hosts: utils03
   gather_facts: false
   tasks:
-  #  - name: Clone Kubespray repository
-  #    git:
-  #      repo: https://github.com/kubernetes-sigs/kubespray.git
-  #      dest: /root/kubespray  # Replace with the desired destination path
-  
     - name: Stop the old container
       community.docker.docker_container:
         name: kubespray
@@ -21,21 +16,14 @@
 
     - name: Remove the old Docker image
       community.docker.docker_image:
-        name: kubespray:latest
+        name: kubespray:main
         state: absent   
-
-    - name: Build Docker image
-      community.docker.docker_image:
-        name: kubespray:latest
-        build:
-          path: /root/kubespray
-        source: build
 
     - name: Start Docker container
       docker_container:
         name: kubespray
-        image: kubespray:latest
-        #image: quay.io/kubespray/kubespray:v2.23.0
+        #image: kubespray:latest
+        image: ghcr.io/jwklijnsma/kubespray:main 
         state: started
         interactive: true
         tty: true
