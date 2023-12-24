@@ -7,6 +7,23 @@
   #      repo: https://github.com/kubernetes-sigs/kubespray.git
   #      dest: /root/kubespray  # Replace with the desired destination path
   
+    - name: Stop the old container
+      community.docker.docker_container:
+        name: kubespray
+        state: stopped
+      ignore_errors: yes  # Ignore errors if the container is not running
+
+    - name: Remove the old container
+      community.docker.docker_container:
+        name: kubespray
+        state: absent
+      ignore_errors: yes 
+
+    - name: Remove the old Docker image
+      community.docker.docker_image:
+        name: kubespray:latest
+        state: absent   
+
     - name: Build Docker image
       community.docker.docker_image:
         name: kubespray:latest
