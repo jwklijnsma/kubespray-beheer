@@ -2,10 +2,10 @@
   hosts: utils03
   gather_facts: false
   tasks:
-    - name: Clone Kubespray repository
-      git:
-        repo: https://github.com/kubernetes-sigs/kubespray.git
-        dest: /root/kubespray  # Replace with the desired destination path
+  #  - name: Clone Kubespray repository
+  #    git:
+  #      repo: https://github.com/kubernetes-sigs/kubespray.git
+  #      dest: /root/kubespray  # Replace with the desired destination path
   
     - name: Build Docker image
       community.docker.docker_image:
