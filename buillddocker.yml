@@ -13,6 +13,7 @@
         build:
           path: /root/kubespray
         source: build
+        force: yes 
 
     - name: Start Docker container
       docker_container:
