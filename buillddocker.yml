@@ -2,6 +2,9 @@
   hosts: utils03
   gather_facts: false
   tasks:
+    - name: pull image
+      command: docker pull ghcr.io/jwklijnsma/kubespray:master
+
     - name: Stop the old container
       community.docker.docker_container:
         name: kubespray
