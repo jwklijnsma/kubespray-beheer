@@ -3,7 +3,7 @@
   gather_facts: false
   tasks:
     - name: pull image
-      command: docker pull ghcr.io/jwklijnsma/kubespray:master
+      command: docker pull quay.io/kubespray/kubespray:v2.24.2
 
     - name: Stop the old container
       community.docker.docker_container:
@@ -26,7 +26,7 @@
       docker_container:
         name: kubespray
         #image: kubespray:latest
-        image: ghcr.io/jwklijnsma/kubespray:master
+        image: quay.io/kubespray/kubespray:v2.24.2
         state: started
         interactive: true
         tty: true
