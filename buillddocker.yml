@@ -3,7 +3,7 @@
   gather_facts: false
   tasks:
     - name: pull image
-      command: docker pull quay.io/kubespray/kubespray:v2.24.2
+      command: docker pull quay.io/kubespray/kubespray:v2.25.1
 
     - name: Stop the old container
       community.docker.docker_container:
